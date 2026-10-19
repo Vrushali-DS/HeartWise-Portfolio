@@ -31,7 +31,7 @@ TEMPLATES_DIR = BASE_DIR / "templates"
 DATA_DIR = BASE_DIR / "data"
 MODEL_DIR = BASE_DIR / "model"
 DATABASE_DIR = BASE_DIR / "database"
-UPLOAD_DIR = BASE_DIR / "uploads"
+UPLOAD_DIR = Path("/tmp/heartwise_uploads")
 ML_DIR = BASE_DIR / "machine_learning"
 
 for directory in (

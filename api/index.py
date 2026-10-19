@@ -4,6 +4,7 @@ import uuid
 from datetime import datetime
 from pathlib import Path
 
+import os
 import joblib
 import pandas as pd
 from fastapi import FastAPI, Request, UploadFile, File, HTTPException

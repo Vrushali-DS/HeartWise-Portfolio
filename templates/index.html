@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HeartWise | Cardio Intelligence</title>
+  <link rel="stylesheet" href="/static/style.css?v=hw-page-1">
+</head>
+<body>
+<div class="app-shell">
+
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#overview" data-page="overview">
+      <span class="brand-icon">♥</span>
+      <span>
+        <strong>heartwise.</strong>
+        <small>CARDIO INTELLIGENCE</small>
+      </span>
+    </a>
+
+    <p class="side-label">WORKSPACE</p>
+    <nav class="navigation">
+      <a class="nav-link active" href="#overview" data-page="overview">⌂ &nbsp; Overview</a>
+      <a class="nav-link" href="#assessment" data-page="assessment">＋ &nbsp; New Assessment</a>
+      <a class="nav-link" href="#insights" data-page="insights">▥ &nbsp; Model Insights</a>
+      <a class="nav-link" href="#comparison" data-page="comparison">⇄ &nbsp; Model Comparison</a>
+      <a class="nav-link" href="#history" data-page="history">▤ &nbsp; Prediction History</a>
+      <a class="nav-link" href="#about" data-page="about">ⓘ &nbsp; About HeartWise</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="privacy-card">
+        <span class="tiny-dot">◇</span>
+        <strong>Your data, your control</strong>
+        <p>Successful predictions are saved in the local SQLite database.</p>
+      </div>
+      <div class="profile">
+        <span class="avatar">HW</span>
+        <span><strong>HeartWise Lab</strong><small>Portfolio project</small></span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation">☰</button>
+      <div>
+        <p class="eyebrow">CARDIOVASCULAR ANALYTICS PLATFORM</p>
+        <h1>HeartWise <span class="muted-heading" id="pageTitle">/ Overview</span></h1>
+      </div>
+      <div class="connection-badge">
+        <span class="connection-dot" id="headerDot"></span>
+        <span id="headerStatus">Connecting…</span>
+      </div>
+    </header>
+
+    <!-- OVERVIEW PAGE -->
+    <section class="section page-panel" id="overview">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">YOUR HEALTH DATA, VISUALIZED</p>
+          <h2>Understand the signals.<br><span>Make data meaningful.</span></h2>
+          <p>Explore model performance, dataset distribution and prediction history in one place.</p>
+          <button class="primary-button" type="button" data-open-page="assessment">＋ Start a new assessment</button>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="pulse-ring ring-one"></div>
+          <div class="pulse-ring ring-two"></div>
+          <div class="heart-symbol">♥</div>
+          <div class="pulse-label">HEARTWISE <span>•</span> ML</div>
+        </div>
+      </div>
+
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">MODEL PERFORMANCE</p>
+          <h2>Evaluation Overview</h2>
+          <p class="section-description">Accuracy, precision, recall and F1 score.</p>
+        </div>
+        <span class="subtle-tag">MODEL INSIGHTS</span>
+      </div>
+
+      <div class="metric-grid">
+        <article class="metric-card">
+          <div class="metric-top"><span>Accuracy</span><span class="metric-icon cyan">◎</span></div>
+          <div class="metric-number" id="topAccuracy">80.3%</div>
+          <p>Overall predictions correct</p>
+        </article>
+        <article class="metric-card">
+          <div class="metric-top"><span>Precision</span><span class="metric-icon violet">◈</span></div>
+          <div class="metric-number" id="topPrecision">80.0%</div>
+          <p>Positive predictions correct</p>
+        </article>
+        <article class="metric-card">
+          <div class="metric-top"><span>Recall</span><span class="metric-icon green">↗</span></div>
+          <div class="metric-number" id="topRecall">84.8%</div>
+          <p>Positive cases identified</p>
+        </article>
+        <article class="metric-card">
+          <div class="metric-top"><span>F1 Score</span><span class="metric-icon blue">✳</span></div>
+          <div class="metric-number" id="topF1">82.4%</div>
+          <p>Precision and recall balance</p>
+        </article>
+      </div>
+
+      <div class="status-strip">
+        <div class="status-indicator"><span class="connection-dot"></span><span id="metricStatus">Dashboard ready</span></div>
+        <div id="modelDetail">Loading model status…</div>
+        <div><strong id="metricRecords">1025</strong> dataset records</div>
+      </div>
+
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">DATASET SNAPSHOT</p>
+          <h2>Positive vs Negative</h2>
+        </div>
+        <button type="button" class="secondary-button" data-open-page="insights">View insights →</button>
+      </div>
+
+      <div class="two-column">
+        <article class="panel">
+          <div class="panel-heading">
+            <div><h3>Target Distribution</h3><p>Dataset class counts</p></div>
+            <span class="count-chip"><strong id="datasetTotal">1025</strong> rows</span>
+          </div>
+          <canvas id="overviewDatasetChart" aria-label="Positive and negative dataset distribution"></canvas>
+          <div class="distribution-list">
+            <div><span class="legend-name"><i class="legend-dot positive-dot"></i>Positive class (1)</span><strong id="overviewPositive">526</strong></div>
+            <div class="mini-track"><div id="overviewPositiveBar"></div></div>
+            <div class="distribution-second"><span class="legend-name"><i class="legend-dot negative-dot"></i>Negative class (0)</span><strong id="overviewNegative">499</strong></div>
+            <div class="mini-track"><div id="overviewNegativeBar"></div></div>
+          </div>
+          <p class="panel-note" id="overviewDatasetNote">Saved dataset summary; checking CSV connection…</p>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading"><div><h3>Model Status</h3><p>Saved model connection</p></div></div>
+          <div class="result-empty">
+            <div class="empty-heart">♥</div>
+            <h4 id="connectionTitle">Checking model…</h4>
+            <p id="connectionDescription">Waiting for FastAPI response.</p>
+          </div>
+          <div class="disclaimer">
+            <strong>Important</strong>
+            <p>This educational project is not a medical diagnosis or a substitute for a healthcare professional.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ASSESSMENT PAGE -->
+    <section class="section page-panel" id="assessment" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">PERSONALIZED MODEL INPUT</p>
+          <h2>New Heart Assessment</h2>
+          <p class="section-description">Enter values using the codes expected by your trained model.</p>
+        </div>
+        <span class="subtle-tag">13 INPUT FEATURES</span>
+      </div>
+
+      <div class="assessment-layout">
+        <form id="predictionForm" class="panel assessment-form" action="/predict" method="post">
+          <div class="form-heading">
+            <div><span class="form-step">01</span><h3>Patient Parameters</h3></div>
+            <span class="required-note">All fields required</span>
+          </div>
+
+          <div class="form-grid">
+            <label>Age <span>(years)</span>
+              <input type="number" name="age" min="1" max="120" step="1" required value="{{ form_data.get('age', '') }}">
+            </label>
+
+            <label>Sex <span>(dataset code)</span>
+              <select name="sex" required>
+                <option value="">Select code</option>
+                <option value="0" {% if form_data.get('sex') == 0 %}selected{% endif %}>0</option>
+                <option value="1" {% if form_data.get('sex') == 1 %}selected{% endif %}>1</option>
+              </select>
+            </label>
+
+            <label>Chest pain type <span>(cp)</span>
+              <input type="number" name="cp" min="0" max="4" step="1" required value="{{ form_data.get('cp', '') }}">
+            </label>
+
+            <label>Resting blood pressure <span>(trestbps)</span>
+              <input type="number" name="trestbps" min="50" max="300" step="1" required value="{{ form_data.get('trestbps', '') }}">
+            </label>
+
+            <label>Cholesterol <span>(chol)</span>
+              <input type="number" name="chol" min="50" max="800" step="1" required value="{{ form_data.get('chol', '') }}">
+            </label>
+
+            <label>Fasting blood sugar <span>(fbs)</span>
+              <select name="fbs" required>
+                <option value="">Select code</option>
+                <option value="0" {% if form_data.get('fbs') == 0 %}selected{% endif %}>0</option>
+                <option value="1" {% if form_data.get('fbs') == 1 %}selected{% endif %}>1</option>
+              </select>
+            </label>
+
+            <label>Resting ECG <span>(restecg)</span>
+              <input type="number" name="restecg" min="0" max="3" step="1" required value="{{ form_data.get('restecg', '') }}">
+            </label>
+
+            <label>Maximum heart rate <span>(thalach)</span>
+              <input type="number" name="thalach" min="40" max="250" step="1" required value="{{ form_data.get('thalach', '') }}">
+            </label>
+
+            <label>Exercise-induced angina <span>(exang)</span>
+              <select name="exang" required>
+                <option value="">Select code</option>
+                <option value="0" {% if form_data.get('exang') == 0 %}selected{% endif %}>0</option>
+                <option value="1" {% if form_data.get('exang') == 1 %}selected{% endif %}>1</option>
+              </select>
+            </label>
+
+            <label>ST depression <span>(oldpeak)</span>
+              <input type="number" name="oldpeak" min="0" max="10" step="0.1" required value="{{ form_data.get('oldpeak', '') }}">
+            </label>
+
+            <label>Slope <span>(slope)</span>
+              <input type="number" name="slope" min="0" max="3" step="1" required value="{{ form_data.get('slope', '') }}">
+            </label>
+
+            <label>Major vessels <span>(ca)</span>
+              <input type="number" name="ca" min="0" max="4" step="1" required value="{{ form_data.get('ca', '') }}">
+            </label>
+
+            <label>Thal <span>(thal)</span>
+              <input type="number" name="thal" min="0" max="7" step="1" required value="{{ form_data.get('thal', '') }}">
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button class="primary-button" id="predictButton" type="submit">✦ Generate Model Result ↗</button>
+            <button class="secondary-button" id="resetButton" type="reset">Clear Form</button>
+          </div>
+
+          <p class="form-footnote">Use codes consistent with your training dataset. The model output is for educational demonstration only.</p>
+        </form>
+
+        <aside class="panel result-panel">
+          <p class="eyebrow">ASSESSMENT OUTPUT</p>
+          <h3>Prediction Summary</h3>
+
+          {% if error %}
+          <div class="result-box error-box" id="resultContent">
+            <span class="result-symbol">!</span>
+            <h4>Unable to generate result</h4>
+            <p>{{ error }}</p>
+          </div>
+          {% elif prediction %}
+          <div class="result-box {% if prediction_value == 1 %}high-result{% else %}low-result{% endif %}" id="resultContent">
+            <span class="result-symbol">{% if prediction_value == 1 %}!{% else %}✓{% endif %}</span>
+            <p class="eyebrow">MODEL CLASSIFICATION</p>
+            <h4>{{ prediction }}</h4>
+            <p>The saved model produced this classification for the values entered.</p>
+            {% if risk_percentage is not none %}
+            <div class="probability-line">
+              <span>Model probability for positive class</span>
+              <strong>{{ "%.2f"|format(risk_percentage) }}%</strong>
+            </div>
+            <div class="progress-track"><div class="progress-fill" style="width: {{ risk_percentage }}%"></div></div>
+            {% endif %}
+          </div>
+          {% else %}
+          <div class="result-empty" id="resultEmpty">
+            <div class="empty-heart">♥</div>
+            <h4>Your result will appear here</h4>
+            <p>Complete all 13 fields and submit the form.</p>
+            <div class="empty-row"><span>Prediction class</span><strong>Waiting for input</strong></div>
+            <div class="empty-row"><span>Positive class probability</span><strong>—</strong></div>
+            <div class="empty-row"><span>Prediction history</span><strong>Saved after prediction</strong></div>
+          </div>
+          {% endif %}
+
+          <div class="disclaimer">
+            <strong>Medical disclaimer</strong>
+            <p>This probability is generated by a machine-learning model. It must not be used to diagnose or treat a medical condition.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- INSIGHTS PAGE -->
+    <section class="section page-panel" id="insights" hidden>
+      <div class="section-heading">
+        <div><p class="eyebrow">DATA EXPLORATION</p><h2>Model Insights</h2><p class="section-description">Evaluation metrics and dataset class distribution.</p></div>
+        <span class="subtle-tag">ANALYTICS</span>
+      </div>
+
+      <div class="two-column">
+        <article class="panel">
+          <div class="panel-heading"><div><h3>Performance Metrics</h3><p>Accuracy, Precision, Recall, F1 and ROC-AUC</p></div></div>
+          <canvas id="metricsChart" aria-label="Model performance chart"></canvas>
+          <div class="metric-list">
+            <div class="metric-row"><span>Accuracy</span><div class="mini-track"><div id="accuracyBar"></div></div><strong id="accuracyValue">80.3%</strong></div>
+            <div class="metric-row"><span>Precision</span><div class="mini-track"><div id="precisionBar"></div></div><strong id="precisionValue">80.0%</strong></div>
+            <div class="metric-row"><span>Recall</span><div class="mini-track"><div id="recallBar"></div></div><strong id="recallValue">84.8%</strong></div>
+            <div class="metric-row"><span>F1 Score</span><div class="mini-track"><div id="f1Bar"></div></div><strong id="f1Value">82.4%</strong></div>
+            <div class="metric-row"><span>ROC-AUC</span><div class="mini-track"><div id="aucBar"></div></div><strong id="aucValue">—</strong></div>
+          </div>
+          <p class="panel-note" id="metricsNote">Saved model-comparison figures; checking the metrics API…</p>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading"><div><h3>Dataset Distribution</h3><p>Positive and negative target classes</p></div><span class="count-chip"><strong id="insightDatasetTotal">1025</strong> rows</span></div>
+          <canvas id="datasetChart" aria-label="Dataset distribution chart"></canvas>
+          <div class="distribution-list">
+            <div><span class="legend-name"><i class="legend-dot positive-dot"></i>Positive class (1)</span><strong id="positiveCount">526</strong></div>
+            <div class="mini-track"><div id="positiveBar"></div></div>
+            <div class="distribution-second"><span class="legend-name"><i class="legend-dot negative-dot"></i>Negative class (0)</span><strong id="negativeCount">499</strong></div>
+            <div class="mini-track"><div id="negativeBar"></div></div>
+          </div>
+          <p class="panel-note" id="datasetNote">Saved dataset summary; checking CSV connection…</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- COMPARISON PAGE -->
+    <section class="section page-panel" id="comparison" hidden>
+      <div class="section-heading">
+        <div><p class="eyebrow">ALGORITHM BENCHMARK</p><h2>Model Comparison</h2><p class="section-description">Compare the saved model-performance figures.</p></div>
+        <span class="subtle-tag">MODEL LAB</span>
+      </div>
+
+      <article class="panel comparison-panel">
+        <canvas id="comparisonChart" aria-label="Model comparison chart"></canvas>
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1 Score</th></tr></thead>
+            <tbody id="modelComparisonBody">
+              <tr><td>Logistic Regression</td><td>80.3%</td><td>80.0%</td><td>84.8%</td><td>82.4%</td></tr>
+              <tr><td>Random Forest</td><td>75.4%</td><td>76.5%</td><td>78.8%</td><td>77.6%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="panel-note" id="comparisonNote">Saved comparison figures are shown if the CSV/API is unavailable.</p>
+      </article>
+    </section>
+
+    <!-- HISTORY PAGE -->
+    <section class="section page-panel" id="history" hidden>
+      <div class="section-heading">
+        <div><p class="eyebrow">SAVED ASSESSMENTS</p><h2>Prediction History</h2><p class="section-description">Records are read from the SQLite prediction database.</p></div>
+        <span class="subtle-tag" id="historySummary">Loading history…</span>
+      </div>
+
+      <div class="two-column">
+        <article class="panel">
+          <div class="panel-heading"><div><h3>Historical Classes</h3><p>Saved classifications</p></div></div>
+          <canvas id="historyChart" aria-label="History class chart"></canvas>
+          <div class="history-counts">
+            <div><span class="legend-dot positive-dot"></span>High Risk <strong id="historyHighCount">0</strong></div>
+            <div><span class="legend-dot negative-dot"></span>Low Risk <strong id="historyLowCount">0</strong></div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading"><div><h3>Recent Predictions</h3><p>Latest saved assessments</p></div></div>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>ID</th><th>Date</th><th>Age</th><th>Chol.</th><th>Class</th><th>Probability</th></tr></thead>
+              <tbody id="historyBody"><tr><td colspan="6" class="empty-cell">Loading saved records…</td></tr></tbody>
+            </table>
+          </div>
+          <p class="panel-note" id="historyNote">Reading SQLite history…</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ABOUT PAGE -->
+    <section class="section page-panel about-section" id="about" hidden>
+      <p class="eyebrow">ABOUT THE PROJECT</p>
+      <h2>HeartWise <span class="accent-text">Cardio Intelligence</span></h2>
+      <p>HeartWise is a portfolio project demonstrating a saved machine-learning model, FastAPI, model metrics, dataset summaries, comparison charts and prediction history.</p>
+      <p class="disclaimer-text">Dataset-level metrics may include records used during training. They must not be presented as independent test results. Model outputs are educational, not verified medical conclusions.</p>
+    </section>
+
+    <footer class="footer">
+      <span>© 2026 HeartWise Lab · Educational ML project</span>
+      <button type="button" class="secondary-button" data-open-page="overview">Back to Overview ↑</button>
+    </footer>
+  </main>
+</div>
+
+<script>
+"use strict";
+
+const $ = id => document.getElementById(id);
+const C = {
+  cyan:"#5ce7d3",
+  blue:"#65a9ff",
+  violet:"#9d91ff",
+  green:"#65dfb0",
+  muted:"#8298b2",
+  grid:"rgba(143,162,186,.16)",
+  text:"#edf5ff"
+};
+
+/* Previously saved model-comparison CSV figures.
+   They are comparison figures, not independent test-set results. */
+const FALLBACK_MODELS = [
+  {
+    Model:"Logistic Regression",
+    Accuracy:0.8032786885245902,
+    Precision:0.8,
+    Recall:0.8484848484848485,
+    "F1 Score":0.8235294117647058
+  },
+  {
+    Model:"Random Forest",
+    Accuracy:0.7540983606557377,
+    Precision:0.7647058823529411,
+    Recall:0.7878787878787877,
+    "F1 Score":0.7761194029850746
+  }
+];
+
+const FALLBACK_DATASET = {
+  total_rows:1025,
+  positive:526,
+  negative:499
+};
+
+const state = {
+  metrics:null,
+  dataset:null,
+  models:FALLBACK_MODELS,
+  summary:null
+};
+
+/* PAGE NAVIGATION: changes page instead of scrolling down */
+function showPage(pageId) {
+  const page = $(pageId);
+  if (!page) return;
+
+  document.querySelectorAll("main > .page-panel").forEach(section => {
+    section.hidden = section.id !== pageId;
+  });
+
+  document.querySelectorAll(".nav-link[data-page]").forEach(link => {
+    link.classList.toggle("active", link.dataset.page === pageId);
+  });
+
+  const title = $("pageTitle");
+  if (title) {
+    const activeLink = document.querySelector(`.nav-link[data-page="${pageId}"]`);
+    const label = activeLink
+      ? activeLink.textContent.replace(/[⌂＋▥⇄▤ⓘ]/g,"").trim()
+      : "Overview";
+    title.textContent = "/ " + label;
+  }
+
+  $("sidebar")?.classList.remove("open");
+  history.replaceState(null, "", "#" + pageId);
+
+  /* Repaint charts after revealing a previously hidden page */
+  requestAnimationFrame(() => {
+    if (pageId === "overview") drawDonut("overviewDatasetChart", datasetCounts(), ["Positive","Negative"], [C.cyan,C.violet]);
+    if (pageId === "insights") {
+      if (state.metrics) drawMetricChart(state.metrics);
+      if (state.dataset) drawDonut("datasetChart", datasetCounts(), ["Positive","Negative"], [C.cyan,C.violet]);
+    }
+    if (pageId === "comparison") drawComparison(state.models);
+    if (pageId === "history") drawHistoryChart();
+  });
+}
+
+document.querySelectorAll("[data-page]").forEach(link => {
+  link.addEventListener("click", event => {
+    event.preventDefault();
+    showPage(link.dataset.page);
+  });
+});
+
+document.querySelectorAll("[data-open-page]").forEach(button => {
+  button.addEventListener("click", () => showPage(button.dataset.openPage));
+});
+
+$("menuToggle")?.addEventListener("click", () => {
+  $("sidebar")?.classList.toggle("open");
+});
+
+/* Common helpers */
+function setText(id, value) {
+  const el = $(id);
+  if (el) el.textContent = value;
+}
+
+function safe(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[ch]);
+}
+
+function number(value) {
+  if (value === null || value === undefined || value === "") return null;
+  if (typeof value === "string" && value.trim().endsWith("%")) {
+    const n = Number(value.trim().slice(0,-1));
+    return Number.isFinite(n) ? n/100 : null;
+  }
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
+function ratio(value) {
+  const n = number(value);
+  return n === null ? null : (n > 1 && n <= 100 ? n/100 : n);
+}
+
+function percent(value) {
+  const n = ratio(value);
+  return n === null ? "—" : (n*100).toFixed(1) + "%";
+}
+
+function getValue(obj, keys) {
+  for (const key of keys) {
+    if (obj && obj[key] !== null && obj[key] !== undefined && obj[key] !== "") return obj[key];
+  }
+  return null;
+}
+
+function setBar(id, value) {
+  const bar = $(id);
+  if (!bar) return;
+  const n = ratio(value);
+  bar.style.width = n === null ? "0%" : (Math.max(0,Math.min(1,n))*100) + "%";
+}
+
+function setMetric(valueId, barId, value) {
+  setText(valueId, percent(value));
+  setBar(barId, value);
+}
+
+async function getJSON(url) {
+  const response = await fetch(url, {
+    headers:{"Accept":"application/json"},
+    cache:"no-store"
+  });
+  if (!response.ok) throw new Error(url + " returned HTTP " + response.status);
+  return response.json();
+}
+
+function showTableMessage(id, count, message) {
+  const body = $(id);
+  if (body) body.innerHTML =
+    `<tr><td colspan="${count}" class="empty-cell">${safe(message)}</td></tr>`;
+}
+
+function normaliseMetrics(row) {
+  if (!row) return null;
+  return {
+    accuracy:getValue(row,["accuracy","Accuracy"]),
+    precision:getValue(row,["precision","Precision"]),
+    recall:getValue(row,["recall","Recall"]),
+    f1:getValue(row,["f1","f1_score","F1 Score"]),
+    roc_auc:getValue(row,["roc_auc","ROC-AUC","ROC_AUC","AUC","auc"]),
+    sample_count:getValue(row,["sample_count"])
+  };
+}
+
+function validMetrics(m) {
+  return Boolean(m) && [m.accuracy,m.precision,m.recall,m.f1]
+    .every(v => number(v) !== null);
+}
+
+/* Canvas utility */
+function prepareCanvas(id,height) {
+  const canvas = $(id);
+  if (!canvas) return null;
+  const width = Math.max(260, Math.floor(canvas.clientWidth || 320));
+  const dpr = Math.max(1,window.devicePixelRatio || 1);
+  canvas.width = Math.round(width*dpr);
+  canvas.height = Math.round(height*dpr);
+  canvas.style.height = height + "px";
+  const ctx = canvas.getContext("2d");
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  return {ctx,width,height};
+}
+
+function drawDonut(id,values,labels,colors) {
+  const chart = prepareCanvas(id,220);
+  if (!chart) return;
+  const {ctx,width} = chart;
+  ctx.clearRect(0,0,width,220);
+  const vals = values.map(v => Math.max(0,number(v) ?? 0));
+  const total = vals.reduce((a,b)=>a+b,0);
+  const cx = width/2, cy = 91, outer=62, inner=42;
+
+  if (!total) {
+    ctx.beginPath();
+    ctx.arc(cx,cy,(outer+inner)/2,0,Math.PI*2);
+    ctx.strokeStyle="#203349";
+    ctx.lineWidth=outer-inner;
+    ctx.stroke();
+    ctx.fillStyle=C.muted;
+    ctx.font="12px Arial";
+    ctx.textAlign="center";
+    ctx.fillText("No records",cx,cy+outer+22);
+    return;
+  }
+
+  let start=-Math.PI/2;
+  vals.forEach((v,i)=>{
+    if (!v) return;
+    const end=start+(v/total)*Math.PI*2;
+    ctx.beginPath();
+    ctx.arc(cx,cy,(outer+inner)/2,start,end);
+    ctx.strokeStyle=colors[i];
+    ctx.lineWidth=outer-inner;
+    ctx.stroke();
+    start=end;
+  });
+
+  ctx.fillStyle=C.text;
+  ctx.font="700 21px Arial";
+  ctx.textAlign="center";
+  ctx.fillText(total.toLocaleString(),cx,cy+5);
+  ctx.fillStyle=C.muted;
+  ctx.font="10px Arial";
+  ctx.fillText("RECORDS",cx,cy+22);
+
+  const legendWidth=Math.min(width-24,290);
+  const groupWidth=legendWidth/Math.max(1,labels.length);
+  const startX=(width-legendWidth)/2;
+  labels.forEach((label,i)=>{
+    const x=startX+i*groupWidth;
+    ctx.fillStyle=colors[i];
+    ctx.beginPath();
+    ctx.arc(x+5,190,4,0,Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle="#9eb0c7";
+    ctx.textAlign="left";
+    ctx.font="10px Arial";
+    ctx.fillText(label,x+13,193,groupWidth-16);
+  });
+}
+
+function drawMetricChart(m) {
+  const chart=prepareCanvas("metricsChart",205);
+  if (!chart) return;
+  const {ctx,width,height}=chart;
+  ctx.clearRect(0,0,width,height);
+  const items=[
+    ["Accuracy",m.accuracy,C.cyan],
+    ["Precision",m.precision,C.violet],
+    ["Recall",m.recall,C.green],
+    ["F1 Score",m.f1,C.blue],
+    ["ROC-AUC",m.roc_auc,"#b7a3ff"]
+  ];
+  const labelWidth=76;
+  const plotWidth=Math.max(60,width-labelWidth-48);
+  items.forEach(([label,raw,color],i)=>{
+    const y=10+i*34;
+    const v=ratio(raw);
+    ctx.fillStyle="#a5b7ca";
+    ctx.font="10px Arial";
+    ctx.textAlign="left";
+    ctx.fillText(label,0,y+12);
+    ctx.fillStyle="#1a2c41";
+    ctx.fillRect(labelWidth,y+2,plotWidth,7);
+    if (v!==null) {
+      ctx.fillStyle=color;
+      ctx.fillRect(labelWidth,y+2,plotWidth*Math.max(0,Math.min(1,v)),7);
+    }
+    ctx.fillStyle="#d5e2f2";
+    ctx.textAlign="right";
+    ctx.fillText(percent(raw),width,y+12);
+  });
+  ctx.fillStyle="#71869f";
+  ctx.font="9px Arial";
+  ctx.textAlign="left";
+  ctx.fillText("0%",labelWidth,height-2);
+  ctx.textAlign="right";
+  ctx.fillText("100%",labelWidth+plotWidth,height-2);
+}
+
+function drawComparison(models) {
+  const chart=prepareCanvas("comparisonChart",255);
+  if (!chart) return;
+  const {ctx,width,height}=chart;
+  ctx.clearRect(0,0,width,height);
+  if (!models.length) {
+    ctx.fillStyle=C.muted;
+    ctx.font="12px Arial";
+    ctx.textAlign="center";
+    ctx.fillText("No comparison data available",width/2,height/2);
+    return;
+  }
+
+  const defs=[
+    ["Accuracy",["Accuracy","accuracy"],C.cyan],
+    ["Precision",["Precision","precision"],C.violet],
+    ["Recall",["Recall","recall"],C.green],
+    ["F1 Score",["F1 Score","f1_score","f1"],C.blue]
+  ];
+  const left=27,right=12,top=38,bottom=38;
+  const pw=width-left-right,ph=height-top-bottom;
+
+  defs.forEach(([label,keys,color],i)=>{
+    const x=left+i*pw/defs.length;
+    ctx.fillStyle=color;
+    ctx.fillRect(x,8,7,7);
+    ctx.fillStyle="#9eb0c7";
+    ctx.font="9px Arial";
+    ctx.textAlign="left";
+    ctx.fillText(label,x+10,15);
+  });
+
+  for (let tick=0;tick<=1;tick+=0.25) {
+    const y=top+ph*(1-tick);
+    ctx.strokeStyle=C.grid;
+    ctx.beginPath();
+    ctx.moveTo(left,y);
+    ctx.lineTo(width-right,y);
+    ctx.stroke();
+    ctx.fillStyle="#71869f";
+    ctx.font="8px Arial";
+    ctx.textAlign="left";
+    ctx.fillText(Math.round(tick*100)+"%",left,y-3);
+  }
+
+  const groupWidth=pw/models.length;
+  const barWidth=Math.max(4,Math.min(18,groupWidth/7));
+  models.forEach((row,i)=>{
+    const gx=left+i*groupWidth;
+    defs.forEach(([,keys,color],j)=>{
+      const v=ratio(getValue(row,keys));
+      if (v===null) return;
+      const gap=barWidth+3;
+      const x=gx+(groupWidth-defs.length*gap)/2+j*gap;
+      const bh=ph*Math.max(0,Math.min(1,v));
+      ctx.fillStyle=color;
+      ctx.fillRect(x,top+ph-bh,barWidth,bh);
+    });
+    const name=String(row.Model ?? row.model ?? "Model "+(i+1));
+    ctx.fillStyle="#a8bad0";
+    ctx.font="9px Arial";
+    ctx.textAlign="center";
+    ctx.fillText(name.length>16?name.slice(0,14)+"…":name,gx+groupWidth/2,height-12);
+  });
+}
+
+/* Metric cards always have an initial value, so no permanent Loading text */
+function showMetrics(m,note) {
+  state.metrics=m;
+  setText("topAccuracy",percent(m.accuracy));
+  setText("topPrecision",percent(m.precision));
+  setText("topRecall",percent(m.recall));
+  setText("topF1",percent(m.f1));
+  setMetric("accuracyValue","accuracyBar",m.accuracy);
+  setMetric("precisionValue","precisionBar",m.precision);
+  setMetric("recallValue","recallBar",m.recall);
+  setMetric("f1Value","f1Bar",m.f1);
+  setMetric("aucValue","aucBar",m.roc_auc);
+  setText("metricRecords",m.sample_count != null ? Number(m.sample_count).toLocaleString() : "1025");
+  setText("metricsNote",note);
+  drawMetricChart(m);
+}
+
+function datasetCounts() {
+  return state.dataset
+    ? [state.dataset.positive,state.dataset.negative]
+    : [FALLBACK_DATASET.positive,FALLBACK_DATASET.negative];
+}
+
+function showDatasetCounts(total,positive,negative,note) {
+  setText("datasetTotal",Number(total).toLocaleString());
+  setText("insightDatasetTotal",Number(total).toLocaleString());
+  setText("overviewPositive",Number(positive).toLocaleString());
+  setText("positiveCount",Number(positive).toLocaleString());
+  setText("overviewNegative",Number(negative).toLocaleString());
+  setText("negativeCount",Number(negative).toLocaleString());
+  setText("overviewPositiveBar", "");
+  setBar("overviewPositiveBar", Number(positive)/(Number(positive)+Number(negative)));
+  setBar("overviewNegativeBar", Number(negative)/(Number(positive)+Number(negative)));
+  setBar("positiveBar", Number(positive)/(Number(positive)+Number(negative)));
+  setBar("negativeBar", Number(negative)/(Number(positive)+Number(negative)));
+  setText("overviewDatasetNote",note);
+  setText("datasetNote",note);
+  drawDonut("overviewDatasetChart",[positive,negative],["Positive","Negative"],[C.cyan,C.violet]);
+  drawDonut("datasetChart",[positive,negative],["Positive","Negative"],[C.cyan,C.violet]);
+}
+
+/* Initial fallback first */
+showMetrics(normaliseMetrics(FALLBACK_MODELS[0]),"Saved comparison figures. Checking live evaluation API…");
+showDatasetCounts(
+  FALLBACK_DATASET.total_rows,
+  FALLBACK_DATASET.positive,
+  FALLBACK_DATASET.negative,
+  "Saved dataset summary shown while the CSV API is checked."
+);
+drawComparison(FALLBACK_MODELS);
+
+/* Actual metrics API, then saved comparison API */
+async function loadMetrics() {
+  let m=null;
+  let note="";
+
+  try {
+    const data=await getJSON("/api/evaluation-metrics");
+    if (data.available===true) {
+      const received=normaliseMetrics(data);
+      if (validMetrics(received)) {
+        m=received;
+        note=data.evaluation_note || "Dataset-level diagnostic metrics.";
+      }
+    } else {
+      note=data.message || "";
+    }
+  } catch (err) {
+    console.warn("Evaluation metrics API:",err);
+  }
+
+  if (!m) {
+    try {
+      const data=await getJSON("/api/model-comparison");
+      const models=Array.isArray(data)?data:(Array.isArray(data.models)?data.models:[]);
+      const selected=models.find(row=>String(row.Model ?? row.model ?? "").toLowerCase().includes("logistic")) || models[0];
+      const received=normaliseMetrics(selected);
+      if (validMetrics(received)) {
+        m=received;
+        note="Loaded saved model-comparison figures; not independent test scores.";
+      }
+    } catch (err) {
+      console.warn("Model comparison API:",err);
+    }
+  }
+
+  if (!m) {
+    m=normaliseMetrics(FALLBACK_MODELS[0]);
+    note="Showing saved comparison figures. Check backend/API connection.";
+  }
+
+  showMetrics(m,note);
+}
+
+/* Dataset endpoint and target counting */
+async function loadDataset() {
+  try {
+    const data=await getJSON("/api/dataset");
+    if (data.error) throw new Error(data.error);
+
+    const rows=Array.isArray(data.rows)?data.rows:[];
+    const columns=Array.isArray(data.columns)?data.columns:(rows.length?Object.keys(rows[0]):[]);
+    const normalise=s=>String(s).trim().toLowerCase().replace(/\s+/g,"_");
+    const target=columns.find(c=>["target","output","num","heartdisease","heart_disease"].includes(normalise(c)));
+
+    if (!target) throw new Error("Target column not found in the dataset.");
+
+    let positive=0,negative=0;
+    rows.forEach(row=>{
+      const v=Number(row[target]);
+      if (Number.isFinite(v) && v>0) positive++;
+      else if (v===0) negative++;
+    });
+
+    state.dataset={
+      total_rows:Number(data.total_rows ?? rows.length),
+      positive,
+      negative,
+      columns,
+      rows
+    };
+
+    showDatasetCounts(
+      state.dataset.total_rows,
+      positive,
+      negative,
+      "Actual counts loaded from "+(data.source || "dataset CSV")+"."
+    );
+  } catch (err) {
+    console.warn("Dataset API:",err);
+    state.dataset=FALLBACK_DATASET;
+    showDatasetCounts(
+      FALLBACK_DATASET.total_rows,
+      FALLBACK_DATASET.positive,
+      FALLBACK_DATASET.negative,
+      "Showing saved dataset counts. CSV API unavailable: "+err.message
+    );
+  }
+}
+
+/* Model comparison and chart */
+async function loadComparison() {
+  let models=FALLBACK_MODELS;
+  try {
+    const data=await getJSON("/api/model-comparison");
+    const received=Array.isArray(data)?data:(Array.isArray(data.models)?data.models:[]);
+    if (received.length) models=received;
+  } catch (err) {
+    console.warn("Comparison API:",err);
+  }
+
+  state.models=models;
+  drawComparison(models);
+
+  const body=$("modelComparisonBody");
+  if (body) {
+    body.innerHTML=models.map(row=>`
+      <tr>
+        <td>${safe(row.Model ?? row.model ?? "Model")}</td>
+        <td>${safe(percent(getValue(row,["Accuracy","accuracy"])))}</td>
+        <td>${safe(percent(getValue(row,["Precision","precision"])))}</td>
+        <td>${safe(percent(getValue(row,["Recall","recall"])))}</td>
+        <td>${safe(percent(getValue(row,["F1 Score","f1_score","f1"])))}</td>
+      </tr>`).join("");
+  }
+
+  setText("comparisonNote","Comparison data from the saved CSV when available; fallback figures are marked in code.");
+}
+
+/* Model health */
+async function loadHealth() {
+  try {
+    const data=await getJSON("/api/health");
+    const ready=Boolean(data.ready);
+    setText("headerStatus",ready?"Model connected":"Model unavailable");
+    setText("metricStatus",ready?"Connected":"Unavailable");
+    setText("modelDetail",ready?`${data.model || "Trained model"} · ${data.features || 13} features`:"Check saved model files");
+    setText("connectionTitle",ready?"Trained model is connected":"Model not available");
+    setText("connectionDescription",ready?"Existing saved model loaded.":(data.error || "Check model/heart_model.pkl."));
+    const dot=$("headerDot");
+    if (dot) dot.style.background=ready?C.green:"#f5b85e";
+  } catch (err) {
+    setText("headerStatus","Connection unavailable");
+    setText("metricStatus","Unavailable");
+    setText("modelDetail","Could not contact FastAPI");
+    setText("connectionTitle","Model status unavailable");
+    setText("connectionDescription",err.message);
+  }
+}
+
+/* SQLite prediction history */
+async function loadHistory() {
+  try {
+    const [summary,response]=await Promise.all([
+      getJSON("/api/dashboard"),
+      getJSON("/api/predictions")
+    ]);
+
+    state.summary=summary;
+    const rows=Array.isArray(response)?response:(Array.isArray(response.rows)?response.rows:[]);
+    const high=Number(summary.high_risk ?? rows.filter(r=>Number(r.prediction)===1).length);
+    const low=Number(summary.low_risk ?? rows.filter(r=>Number(r.prediction)===0).length);
+    const total=Number(summary.total_predictions ?? high+low);
+
+    setText("historySummary",`${total.toLocaleString()} saved assessments`);
+    setText("historyHighCount",high.toLocaleString());
+    setText("historyLowCount",low.toLocaleString());
+    drawHistoryChart();
+
+    const body=$("historyBody");
+    if (!body) return;
+
+    if (!rows.length) {
+      showTableMessage("historyBody",6,"No predictions saved yet. Submit the assessment form.");
+      setText("historyNote","Successful predictions will appear here.");
+      return;
+    }
+
+    body.innerHTML=rows.slice(0,30).map(row=>{
+      const isHigh=Number(row.prediction)===1;
+      const date=row.created_at?String(row.created_at).replace("T"," ").slice(0,16):"—";
+      const p=number(row.risk_probability);
+      const probability=p===null?"N/A":p.toFixed(1)+"%";
+
+      return `<tr>
+        <td>${safe(row.id)}</td>
+        <td>${safe(date)}</td>
+        <td>${safe(row.age)}</td>
+        <td>${safe(row.chol)}</td>
+        <td><span class="status-pill ${isHigh?"":"low"}">${isHigh?"High Risk":"Low Risk"}</span></td>
+        <td>${safe(probability)}</td>
+      </tr>`;
+    }).join("");
+
+    setText("historyNote",`Showing ${Math.min(rows.length,30)} recent records from SQLite.`);
+  } catch (err) {
+    setText("historySummary","History unavailable");
+    setText("historyNote",err.message);
+    showTableMessage("historyBody",6,"Could not load SQLite prediction history.");
+  }
+}
+
+function drawHistoryChart() {
+  const high=Number(state.summary?.high_risk || 0);
+  const low=Number(state.summary?.low_risk || 0);
+  drawDonut("historyChart",[high,low],["High Risk","Low Risk"],[C.cyan,C.violet]);
+}
+
+/* Prediction form: keep the assessment screen open after result submission */
+$("predictionForm")?.addEventListener("submit",()=>{
+  const btn=$("predictButton");
+  if (btn) {
+    btn.disabled=true;
+    btn.textContent="Generating result…";
+  }
+});
+
+$("resetButton")?.addEventListener("click",()=>{
+  setTimeout(()=>{
+    const btn=$("predictButton");
+    if (btn) {
+      btn.disabled=false;
+      btn.textContent="✦ Generate Model Result ↗";
+    }
+  },0);
+});
+
+/* Redraw graphs after resizing */
+let resizeTimer;
+window.addEventListener("resize",()=>{
+  clearTimeout(resizeTimer);
+  resizeTimer=setTimeout(()=>{
+    if (state.metrics) drawMetricChart(state.metrics);
+    if (state.models.length) drawComparison(state.models);
+    const counts=datasetCounts();
+    drawDonut("overviewDatasetChart",counts,["Positive","Negative"],[C.cyan,C.violet]);
+    drawDonut("datasetChart",counts,["Positive","Negative"],[C.cyan,C.violet]);
+    drawHistoryChart();
+  },180);
+});
+
+/* Select the correct page without auto-scrolling down */
+const hasPrediction=Boolean($("resultContent") || document.querySelector(".error-box"));
+showPage(hasPrediction?"assessment":(location.hash.slice(1) || "overview"));
+
+/* Actual APIs update the immediate fallback values */
+Promise.allSettled([
+  loadHealth(),
+  loadMetrics(),
+  loadDataset(),
+  loadComparison(),
+  loadHistory()
+]);
+</script>
+</body>
+</html>

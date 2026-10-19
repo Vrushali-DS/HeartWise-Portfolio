@@ -48,7 +48,7 @@ for directory in (
 MODEL_PATH = MODEL_DIR / "heart_model.pkl"
 SCALER_PATH = MODEL_DIR / "scaler.pkl"
 FEATURE_PATH = MODEL_DIR / "features.pkl"
-DATABASE_PATH = DATABASE_DIR / "heart_predictions.db"
+DATABASE_PATH = Path("/tmp/heartwise_predictions.db") if os.getenv("VERCEL") else DATABASE_DIR / "heart_predictions.db"
 COMPARISON_PATH = ML_DIR / "model_comparison.csv"
 
 DATASET_CANDIDATES = [
